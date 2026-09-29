@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>STI Violation Records - Login</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="styles%20(1).css">
+    <script src="app-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/12.19.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/12.19.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/12.19.0/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
+      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <form id="violationForm" hidden aria-hidden="true">
+        <input id="studentId">
+        <input id="studentName">
+        <input id="violationType">
+        <input id="guardianPhone">
+        <input type="email" id="guardianEmail" class="form-control" placeholder="Guardian Email (Optional)">
+      </form>
+      <div class="page active" id="page-login">
+        <div class="login-wrap">
+          <div class="login-left">
+            <img class="login-image" src="IMAGES/sti%20prof%20(1).jfif" alt="STI College profile">
+            <div class="login-topbar">STI COLLEGE DAGUPAN</div>
+            <div class="login-brand">BE MORE.<br>BE <span>STI</span>.</div>
+          </div>
+          <div class="login-right">
+            <form class="login-card" id="loginForm" onsubmit="window.loginUser(event)">
+              <div class="login-avatar">&#128100;</div>
+              <h2>Admin Login</h2>
+              <div class="login-field">
+                <label>Username</label>
+                <input id="loginUsername" type="email" autocomplete="username" placeholder="Enter your email">
+              </div>
+              <div class="login-field">
+                <label>Password</label>
+                <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter your password">
+              </div>
+              <div class="login-field">
+                <label>Login as</label>
+                <select id="loginRole">
+                  <option value="guidance">Guidance Counselor / Guidance Office</option>
+                  <option value="academic">Academic Head</option>
+                  <option value="faculty">Faculty Member</option>
+                  <option value="admin">School Administrator</option>
+                  <option value="registrar">Registrar</option>
+                </select>
+              </div>
+              <div class="login-forgot" onclick="window.showPage('reset', event)">Forgot password?</div>
+              <button class="login-btn" type="submit">Log In</button>
+            </form>
+          </div>
+        </div>
+      </div>
+        <div class="page" id="page-reset">
+          <div class="login-wrap">
+            <div class="login-left">
+              <img class="login-image" src="IMAGES/sti%20prof%20(1).jfif" alt="STI College profile">
+              <div class="login-topbar">STI COLLEGE DAGUPAN</div>
+              <div class="login-brand">BE MORE.<br>BE <span>STI</span>.</div>
+            </div>
+            <div class="login-right">
+              <div class="login-card">
+                <div class="login-avatar">&#128274;</div>
+                <h2>Reset Password</h2>
+                <div class="login-field">
+                  <label>School ID Number</label>
+                  <input placeholder="Enter your School ID number">
+                </div>
+                <div class="login-field">
+                  <label>New Password</label>
+                  <input type="password" placeholder="Enter new password">
+                </div>
+                <div class="login-field">
+                  <label>Confirm Password</label>
+                  <input type="password" placeholder="Confirm new password">
+                </div>
+                <button class="login-btn" type="button" onclick="window.showPage('login', event)">Reset Password</button>
+                <div class="reset-note">
+                  Back to <a href="javascript:void(0)" onclick="window.showPage('login', event)" style="color:#0c3f8f;font-weight:700;">Log In</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <script src="script%20(1).js"></script>
+  </body>
+</html>

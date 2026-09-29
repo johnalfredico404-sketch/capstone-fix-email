@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications | STI</title>
+<link rel="stylesheet" href="styles%20(1).css">
+<script src="app-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+<div class="app">
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()">
+</div>
+<div class="page active" id="page-notifications">
+<div class="shell">
+<div class="sidebar" id="sidebar-notifications">
+</div>
+<div class="main">
+<div class="topbar" id="topbar-notifications">
+</div>
+<div class="content">
+<h2 class="page-title">Automated Notifications</h2>
+<div class="greet">Cross-role event log for violation thresholds and dropout recommendation workflows.</div>
+<div class="card" id="notificationFeed" aria-live="polite">
+<div class="table-scroll">
+<table id="notificationsTableWrap">
+<tr>
+<th>Date</th>
+<th>Student</th>
+<th>Type</th>
+<th>Recipients</th>
+<th>Channel</th>
+<th>Status</th>
+</tr>
+</table>
+</div>
+<div id="notificationsEmptyNote" class="empty-note" style="display:none;">No notifications sent yet.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+	import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+	const firebaseConfig = window.__APP_API_CONFIG__.firebase;
+	const app = initializeApp(firebaseConfig);
+	const db = getFirestore(app);
+	window.db = db;
+	window.fs = { collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc };
+</script>
+<script src="script%20(1).js">
+</script>
+</body>
+</html>

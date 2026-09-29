@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Student | STI</title>
+<link rel="stylesheet" href="styles%20(1).css">
+<script src="app-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+<div class="app">
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()">
+</div>
+<div class="page active" id="page-addstudent">
+<div class="shell">
+<div class="sidebar" id="sidebar-addstudent">
+</div>
+<div class="main">
+<div class="topbar" id="topbar-addstudent">
+</div>
+<div class="content">
+<div class="form-card">
+<h2 id="addStudentTitle">ADD STUDENT</h2>
+<div class="form-grid">
+<div class="form-field">
+<label>Student ID</label>
+<input id="f_studentId">
+</div>
+<div class="form-field">
+<label>Gender</label>
+<select id="f_gender">
+<option value="">Select</option>
+<option>Male</option>
+<option>Female</option>
+</select>
+</div>
+<div class="form-field">
+<label>First Name</label>
+<input id="f_firstName">
+</div>
+<div class="form-field">
+<label>Last Name</label>
+<input id="f_lastName">
+</div>
+<div class="form-field" style="grid-column:1/-1">
+<label>Address</label>
+<input id="f_address">
+</div>
+<div class="form-field">
+<label>Course</label>
+<select id="f_course">
+<option>BSHM</option>
+<option>BSIT</option>
+<option>BSTM</option>
+</select>
+</div>
+<div class="form-field">
+<label>Year Level</label>
+<select id="f_yearLevel">
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+</div>
+<div class="form-field">
+<label>Section</label>
+<select id="f_section">
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+</div>
+<div class="form-field">
+<label>Student Status</label>
+<select id="f_status">
+<option>Active</option>
+<option>For Dropout Review</option>
+<option value="VOID">Voided</option>
+<option>Dropped</option>
+<option>Suspended</option>
+</select>
+</div>
+<div class="form-field">
+<label>Phone Number</label>
+<input id="f_phone">
+</div>
+<div class="form-field">
+<label>Parent/Guardian Name</label>
+<input id="f_parentName">
+</div>
+<div class="form-field">
+<label>Parent/Guardian Phone</label>
+<input id="f_parentPhone">
+</div>
+<div class="form-field">
+<label>Guardian Email (optional)</label>
+<input id="guardianEmail" type="email" autocomplete="email">
+</div>
+<div class="form-field" style="grid-column:1/-1">
+<label>Custom Message to Parent/Guardian</label>
+<textarea id="f_parentMessage">
+</textarea>
+</div>
+</div>
+<div class="section-label" id="f_violationSectionLabel">Record a Violation for this Student (optional)</div>
+<div id="f_violationSection">
+<div class="form-field">
+<label>Violation(s)</label>
+<div class="check-list" id="f_violationChecks">
+<div class="category-heading">MINOR OFFENSES</div>
+<label>
+<input type="checkbox" value="Dress code and grooming"> Dress code and grooming</label>
+<label>
+<input type="checkbox" value="Classroom & campus decorum"> Classroom &amp; campus decorum</label>
+<div class="category-heading">MAJOR OFFENSES</div>
+<label>
+<input type="checkbox" value="Basic Misconduct & Campus Disturbance"> Basic Misconduct &amp; Campus Disturbance</label>
+<label>
+<input type="checkbox" value="Academic Integrity, Smoking, & Vandalism"> Academic Integrity, Smoking, &amp; Vandalism</label>
+<label>
+<input type="checkbox" value="Substance Use, Theft, Assault, & Harassment"> Substance Use, Theft, Assault, &amp; Harassment</label>
+<label>
+<input type="checkbox" value="Severe Misconduct, Illegal Acts, & Safety Threats"> Severe Misconduct, Illegal Acts, &amp; Safety Threats</label>
+</div>
+</div>
+<div class="form-grid">
+<div class="form-field">
+<label>Date</label>
+<input id="f_violationDate" type="date">
+</div>
+<div class="form-field">
+<label>Action Taken</label>
+<select id="f_violationAction">
+<option value="">-- None --</option>
+<option>Verbal Warning</option>
+<option>Written Warning</option>
+<option>Community Service</option>
+<option>Suspension</option>
+<option>Scholarship Voided</option>
+</select>
+</div>
+<div class="form-field" style="grid-column:1/-1">
+<label>Notes</label>
+<textarea id="f_violationNotes">
+</textarea>
+</div>
+</div>
+</div>
+<div class="form-actions">
+<button type="button" class="btn gray" onclick="window.showPage('students', event)">Cancel</button>
+<button type="button" class="btn gray" id="printStudentBtn" style="display:none" onclick="printStudentRecord(editingUid)">Print Record</button>
+<button type="button" class="btn green" id="addStudentSaveBtn" onclick="saveStudentForm()">Add Student</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="printArea" class="print-only">
+</div>
+<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+	import { 
+		getFirestore, collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc 
+	} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+	const firebaseConfig = window.__APP_API_CONFIG__.firebase;
+	const app = initializeApp(firebaseConfig);
+	const db = getFirestore(app);
+	window.db = db;
+	window.fs = { collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc };
+</script>
+<script src="script%20(1).js">
+</script>
+</body>
+</html>

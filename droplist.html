@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Status | STI</title>
+<link rel="stylesheet" href="styles%20(1).css">
+<script src="app-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+<div class="app">
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()">
+</div>
+<div class="page active" id="page-droplist">
+<div class="shell">
+<div class="sidebar" id="sidebar-droplist">
+</div>
+<div class="main">
+<div class="topbar" id="topbar-droplist">
+</div>
+<div class="content">
+<h2 class="page-title">Student Status</h2>
+<div class="filters">
+<div class="search"><svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="dropSearch" placeholder="Search for a student by name or ID number" oninput="renderDropTable()">
+<button onclick="renderDropTable()">Search</button>
+</div>
+<select id="dropStatusFilter" onchange="renderDropTable()">
+<option value="">All Statuses</option>
+<option value="Active">Active</option>
+<option value="For Dropout Review">For Dropout Review</option>
+<option value="Voided">Voided</option>
+<option value="Dropped">Dropped</option>
+<option value="Archived">Archived</option>
+<option value="Suspended">Suspended</option>
+</select>
+</div>
+<div class="card">
+<div class="table-scroll">
+<table id="dropTableWrap">
+<tr>
+<th>Student ID</th>
+<th>Student Name</th>
+<th>Course/Year</th>
+<th>Gender</th>
+<th>Status</th>
+</tr>
+</table>
+</div>
+<div id="dropEmptyNote" class="empty-note" style="display:none;">No records match.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+	import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+	const firebaseConfig = window.__APP_API_CONFIG__.firebase;
+	const app = initializeApp(firebaseConfig);
+	const db = getFirestore(app);
+	window.db = db;
+	window.fs = { collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc };
+</script>
+<script src="script%20(1).js">
+</script>
+</body>
+</html>

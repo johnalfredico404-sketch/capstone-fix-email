@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules and Regulations | STI</title>
+<link rel="stylesheet" href="styles%20(1).css">
+<script src="app-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+<div class="app">
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()">
+</div>
+<div class="page active" id="page-discipline">
+<div class="shell">
+<div class="sidebar" id="sidebar-discipline">
+</div>
+<div class="main">
+<div class="topbar" id="topbar-discipline">
+</div>
+<div class="content">
+<h2 class="page-title">Rules and Regulations</h2>
+<div class="grid2">
+<div class="card rules-body">
+<h4>Procedure for Disciplinary Cases</h4>
+<p>1. A violation report is filed by the reporting officer or faculty member upon witnessing or receiving a complaint.</p>
+<p>2. The concerned student is notified and given the opportunity to explain their side within three school days.</p>
+<p>3. Minor offenses are addressed through a verbal warning or written reprimand.</p>
+<p>4. Major or repeated offenses are elevated to the Discipline Committee.</p>
+</div>
+<div class="card rules-body">
+<h4>Implementation of Disciplinary Sanctions</h4>
+<p>Sanctions range from a verbal warning to suspension or voiding of institutional scholarships, depending on severity and frequency.</p>
+<h4>Student Categories</h4>
+<p>Students are categorized as First Offense, Repeated Offense, or Habitual Offender.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+	import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+	const firebaseConfig = window.__APP_API_CONFIG__.firebase;
+	const app = initializeApp(firebaseConfig);
+	const db = getFirestore(app);
+	window.db = db;
+	window.fs = { collection, addDoc, getDocs, onSnapshot, doc, setDoc, deleteDoc, updateDoc };
+</script>
+<script src="script%20(1).js">
+</script>
+</body>
+</html>
